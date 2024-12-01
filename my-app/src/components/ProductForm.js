@@ -1,69 +1,71 @@
 import React, { Component } from "react";
 
-const RESET_VALUES = { id: "", name: "", category: "", price: "" };
+const RESET_VALUES = {
+  id: "",
+  name: "",
+  category: "",
+  price: "",
+};
 
 class ProductForm extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      product: Object.assign({}, RESET_VALUES), 
-      errors: {},
+      product: { ...RESET_VALUES },
     };
 
-    // Bind event handler
     this.handleSave = this.handleSave.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(e) {
-    const target = e.target;
-    const value = target.value;
-    const name = target.name;
-
-    this.setState((prevState) => {
-      const product = { ...prevState.product }; 
-      product[name] = value; 
-      return { product }; 
-    });
+  handleSave(e) {
+    e.preventDefault(); // Prevent default form submission
+    this.props.onSave(this.state.product);
+    this.setState({ product: { ...RESET_VALUES } }); // Reset the form
   }
 
-  handleSave(e) {
-    e.preventDefault(); 
-
-    this.props.onSave(this.state.product);
-
-    this.setState({
-      product: Object.assign({}, RESET_VALUES),
-      errors: {},
-    });
+  handleChange(e) {
+    const { name, value } = e.target;
+    this.setState((prevState) => ({
+      product: { ...prevState.product, [name]: value },
+    }));
   }
 
   render() {
+    const { name, category, price } = this.state.product;
     return (
-      <form>
-        <input
-          type="text"
-          name="name"
-          placeholder="Product Name"
-          value={this.state.product.name}
-          onChange={this.handleChange} 
-        />
-        <input
-          type="text"
-          name="category"
-          placeholder="Category"
-          value={this.state.product.category}
-          onChange={this.handleChange} 
-        />
-        <input
-          type="text"
-          name="price"
-          placeholder="Price"
-          value={this.state.product.price}
-          onChange={this.handleChange} 
-        />
-        <button type="submit" onClick={this.handleSave}>
+      <form className="mb-4" onSubmit={this.handleSave}>
+        <div className="mb-3">
+          <label className="form-label">Name</label>
+          <input
+            className="form-control"
+            type="text"
+            name="name"
+            value={name}
+            onChange={this.handleChange}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Category</label>
+          <input
+            className="form-control"
+            type="text"
+            name="category"
+            value={category}
+            onChange={this.handleChange}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">Price</label>
+          <input
+            className="form-control"
+            type="text"
+            name="price"
+            value={price}
+            onChange={this.handleChange}
+          />
+        </div>
+        <button type="submit" className="btn btn-primary">
           Save
         </button>
       </form>

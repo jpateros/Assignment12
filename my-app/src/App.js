@@ -119,7 +119,7 @@ import Product from "./components/Product";
 const App = () => {
   return (
     <div>
-      <h1>Product Inventory</h1>
+      <h1>My Inventory </h1>
       <Product />
     </div>
   );

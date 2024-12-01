@@ -65,7 +65,7 @@ class Products extends Component {
   render() {
     return (
       <div>
-        <h2>Product Inventory</h2>
+        {/* <h2>Product Inventory</h2> */}
         <Filters
           searchText={this.state.filterText}
           onFilter={this.handleFilter}

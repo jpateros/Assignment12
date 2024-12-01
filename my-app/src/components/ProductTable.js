@@ -2,31 +2,22 @@ import React from "react";
 import ProductRow from "./ProductRow";
 
 const ProductTable = ({ products, filterText, onDelete }) => {
-
-  const handleDestroy = (id) => {
-    onDelete(id); 
-  };
-
   const rows = [];
 
-
+  // Filter products and prepare rows
   Object.keys(products).forEach((key) => {
     const product = products[key];
     if (product.name.toLowerCase().indexOf(filterText.toLowerCase()) === -1) {
-      return; 
+      return;
     }
     rows.push(
-      <ProductRow
-        key={product.id}
-        product={product}
-        onDelete={handleDestroy}  
-      />
+      <ProductRow key={product.id} product={product} onDelete={onDelete} />
     );
   });
 
   return (
-    <table>
-      <thead>
+    <table className="table table-striped table-hover">
+      <thead className="table-dark">
         <tr>
           <th>Name</th>
           <th>Category</th>
